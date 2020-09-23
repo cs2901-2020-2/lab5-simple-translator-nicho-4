@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @Test
-public class TranslateTest {
+public class TranslatorTest {
 
     public void testCase0() throws IOException, Exception {
         generic(0);
@@ -32,7 +32,7 @@ public class TranslateTest {
     private void generic(int i) throws IOException, Exception{
         List<String> input = readInput(i);
         String output = readOutput(i);
-        Translate sequencer = new Translate();
+        Translator sequencer = new Translator();
         String response = sequencer.calculate(input);
         Assert.assertEquals(response, output);
     }
