@@ -5,24 +5,34 @@ import java.io.OutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Translator {
-    // TODO: If you have your own Premium account credentials, put them down here:
+
+    static final Logger logger = Logger.getLogger(Translator.class.getName());
+
     private static final String CLIENT_ID = "FREE_TRIAL_ACCOUNT";
     private static final String CLIENT_SECRET = "PUBLIC_SECRET";
     private static final String ENDPOINT = "http://api.whatsmate.net/v1/translation/translate";
 
-    public static void main(String[] args) throws Exception {
-        // TODO: Specify your translation requirements here:
-        String fromLang = "en";
-        String toLang = "es";
-        String text = "Let's have some fun!";
+    public static void main(String[] args) throws TextSizeException {
+
+        logger.info("Ingrese la palabra o frase a traducir de español a inglés: ");
+        Scanner myObj = new Scanner(System.in);
+        String text = myObj.nextLine();
+
+        if (text.length() > 500){
+            throw new TextSizeException("Se paso del límite ");
+        }
+
+        String fromLang = "es";
+        String toLang = "en";
 
         Translator.translate(fromLang, toLang, text);
     }
     
     public static void translate(String fromLang, String toLang, String text) throws Exception {
-        // TODO: Should have used a 3rd party library to make a JSON string from an object
         String jsonPayload = new StringBuilder()
                 .append("{")
                 .append("\"fromLang\":\"")
@@ -51,13 +61,12 @@ public class Translator {
         os.close();
 
         int statusCode = conn.getResponseCode();
-        System.out.println("Status Code: " + statusCode);
         BufferedReader br = new BufferedReader(new InputStreamReader(
                 (statusCode == 200) ? conn.getInputStream() : conn.getErrorStream()
         ));
         String output;
         while ((output = br.readLine()) != null) {
-            System.out.println(output);
+            logger.info(output);
         }
         conn.disconnect();
     }
