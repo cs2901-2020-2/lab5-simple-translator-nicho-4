@@ -7,10 +7,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.TooManyListenersException;
 
 @Test
-public class DNASequencerTest {
+public class TranslateTest {
 
     public void testCase0() throws IOException, Exception {
         generic(0);
@@ -33,7 +32,7 @@ public class DNASequencerTest {
     private void generic(int i) throws IOException, Exception{
         List<String> input = readInput(i);
         String output = readOutput(i);
-        DNASequencer sequencer = new DNASequencer();
+        Translate sequencer = new Translate();
         String response = sequencer.calculate(input);
         Assert.assertEquals(response, output);
     }
