@@ -16,28 +16,18 @@ public class DNASequencerTest {
         generic(0);
     }
 
-    @Test(expectedExceptions = SequenceSizeException.class)
-    public void testSequenceSize() throws IOException, Exception {
+    @Test(expectedExceptions = TextSizeException.class)
+    public void testTextSize() throws IOException, Exception {
         generic(1);
     }
 
-    @Test(expectedExceptions = QuantitySequenceException.class)
-    public void testQuantitySequence() throws Exception {
-        List<String> sequenceADN = new ArrayList<String>();
-        for (int i = 0; i <= 160000; i++) {
-            sequenceADN.add("QWERTY");
-        }
-        DNASequencer dnaSequencer = new DNASequencer();
-        dnaSequencer.calculate(sequenceADN);
-    }
-
-    @Test(invocationCount = 50, threadPoolSize = 50)
+    @Test(invocationCount = 80, threadPoolSize = 80)
     public void testTime() throws Exception {
         long startTime = System.currentTimeMillis();
         generic(0);
         long endTime = System.currentTimeMillis();
         long time = endTime - startTime;
-        Assert.assertTrue(time < 100);
+        Assert.assertTrue(time <= 400);
     }
 
     private void generic(int i) throws IOException, Exception{
